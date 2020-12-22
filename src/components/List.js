@@ -6,11 +6,17 @@ class List extends Component {
         this.state = {list: ["Todo 1", "Todo 2"]}
     }
 
+    addElement = (element) => {
+        const {list} = this.state
+        list.push(element)
+        this.setState({list})
+    }
+
     render() {
         const {list} = this.state
       return (<div>
-          <ul>{list.map(element => <ElementList text={element}/>)}</ul>
-          <AdderInput/>
+          <ul>{list.map((element,index) => <ElementList key={index} text={element}/>)}</ul>
+          <AdderInput addCallback={this.addElement}/>
           </div>)
     }
 }
@@ -34,7 +40,11 @@ class AdderInput extends Component {
 
     render(){
         const {value} = this.state
-        return <input type="text" value={value} onChange={this.handleChange}/>
+        const {addCallback} = this.props
+        return (<div>
+            <input type="text" value={value} onChange={this.handleChange}/>
+            <button onClick={()=> addCallback(value)}>Añadir</button>
+            </div>)
     }
 }
 
