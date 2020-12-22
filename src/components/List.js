@@ -8,7 +8,10 @@ class List extends Component {
 
     render() {
         const {list} = this.state
-      return <ul>{list.map(element => <ElementList text={element}/>)}</ul>
+      return (<div>
+          <ul>{list.map(element => <ElementList text={element}/>)}</ul>
+          <AdderInput/>
+          </div>)
     }
 }
 
@@ -16,6 +19,22 @@ class ElementList extends Component {
     render(){
         const {text} = this.props
         return <li>{text}</li>
+    }
+}
+
+class AdderInput extends Component {
+    constructor(props){
+        super(props)
+        this.state = {value : ""}
+    }
+
+    handleChange = (event) => {
+        this.setState({value: event.target.value});
+    }
+
+    render(){
+        const {value} = this.state
+        return <input type="text" value={value} onChange={this.handleChange}/>
     }
 }
 
