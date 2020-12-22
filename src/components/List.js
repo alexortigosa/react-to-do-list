@@ -12,10 +12,17 @@ class List extends Component {
         this.setState({list})
     }
 
+    deleteElement = (element) => {
+        const {list} = this.state
+        list.splice(list.indexOf(element),1)
+        this.setState({list}) 
+    }
+
     render() {
         const {list} = this.state
       return (<div>
-          <ul>{list.map((element,index) => <ElementList key={index} text={element}/>)}</ul>
+          <h1>To do List</h1>
+          <ul>{list.map((element,index) => <ElementList key={index} text={element} deleteCallback={this.deleteElement}/>)}</ul>
           <AdderInput addCallback={this.addElement}/>
           </div>)
     }
@@ -23,8 +30,8 @@ class List extends Component {
 
 class ElementList extends Component {
     render(){
-        const {text} = this.props
-        return <li>{text}</li>
+        const {text, deleteCallback} = this.props
+        return <li>{text}    <button onClick={()=> deleteCallback(text)}>x</button></li>
     }
 }
 
